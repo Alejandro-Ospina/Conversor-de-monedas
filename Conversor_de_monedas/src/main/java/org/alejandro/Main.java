@@ -6,9 +6,11 @@ import Exceptions.ParseJsonException;
 import Implementations.ApiExchangeImpl;
 import Implementations.ConfiguracionImpl;
 import Implementations.EjecutarImpl;
+import Implementations.HistorialImpl;
 import Services.ApiExchange;
 import Services.ConfiguracionService;
 import Services.Ejecutar;
+import Services.Historial;
 import Settings.Configuracion;
 
 import java.util.Scanner;
@@ -20,9 +22,10 @@ public class Main {
             Configuracion configuracion = new Configuracion();
             ConfiguracionService configuracionService = new ConfiguracionImpl(configuracion);
             ApiExchange apiExchange = new ApiExchangeImpl(configuracionService);
-            Ejecutar ejecutar = new EjecutarImpl(entrada, apiExchange);
+            Historial historial = new HistorialImpl();
+            Ejecutar ejecutar = new EjecutarImpl(entrada, apiExchange, historial);
             ejecutar.iniciarConversion();
-        } catch (EntradaDeDatosInvalidaException e) {
+        } catch (EntradaDeDatosInvalidaException | LecturaDeArchivoException e) {
             System.out.println(e.getMessage());;
         }finally {
             entrada.close();
